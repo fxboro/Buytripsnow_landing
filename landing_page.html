@@ -1478,25 +1478,29 @@ function showSuccess(p){
 }
 
 /* ── COOKIE CONSENT LOGIC ── */
-const cookieBanner = document.getElementById('cookieBanner');
 function checkConsent(){
+  const cookieBanner = document.getElementById('cookieBanner');
   const consent = localStorage.getItem('buytripsnow_consent');
   if(consent === 'true'){
     loadTrackingScripts();
   } else if(consent === null){
-    setTimeout(() => cookieBanner.classList.add('show'), 2000);
+    setTimeout(() => {
+      if(cookieBanner) cookieBanner.classList.add('show');
+    }, 2000);
   }
 }
 
 function acceptCookies(){
+  const cookieBanner = document.getElementById('cookieBanner');
   localStorage.setItem('buytripsnow_consent', 'true');
-  cookieBanner.classList.remove('show');
+  if(cookieBanner) cookieBanner.classList.remove('show');
   loadTrackingScripts();
 }
 
 function declineCookies(){
+  const cookieBanner = document.getElementById('cookieBanner');
   localStorage.setItem('buytripsnow_consent', 'false');
-  cookieBanner.classList.remove('show');
+  if(cookieBanner) cookieBanner.classList.remove('show');
 }
 
 window.addEventListener('load', checkConsent);
