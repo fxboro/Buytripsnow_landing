@@ -1043,5 +1043,91 @@ button{cursor:pointer;font-family:var(--ff-b);}
   height: auto;
 }
 
+/* ── Dynamic Quote Estimator Styles ── */
+.quote-estimator {
+  margin-top: 24px;
+  background: #fbfaf8; /* Warm light grey/gold tint */
+  border: 1px dashed var(--gold);
+  border-radius: var(--r);
+  padding: 20px;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.quote-estimator.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.quote-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.quote-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.quote-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgba(13,15,20,0.7);
+  font-family: var(--font-jost), sans-serif;
+}
+
+.quote-line-label {
+  font-weight: 400;
+}
+
+.quote-line-amount {
+  font-weight: 500;
+}
+
+.quote-divider {
+  height: 1px;
+  background: rgba(13,15,20,0.08);
+  margin: 12px 0;
+}
+
+.quote-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.quote-total-label {
+  font-family: var(--font-jost), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--gold);
+}
+
+.quote-total-value {
+  font-family: var(--font-cormorant), serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.quote-disclaimer {
+  font-family: var(--font-jost), sans-serif;
+  font-size: 11px;
+  color: rgba(13,15,20,0.48);
+  line-height: 1.4;
+  margin: 0;
+}
+
+
 
 

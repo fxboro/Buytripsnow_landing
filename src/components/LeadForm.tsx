@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5_vUSvE0OHJxPtdXaDSohv9CH35diPkTu17Jo-gT-RS5pswkZS98EaWo70rVA0DM/exec";
 
@@ -69,6 +69,12 @@ export default function LeadForm({ externalSelectedPkg = "" }: LeadFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  // Estimator States
+  const [estimate, setEstimate] = useState<number | null>(null);
+  const [breakdown, setBreakdown] = useState<Array<{ label: string; amount: number }>>([]);
+  const [loadingQuote, setLoadingQuote] = useState(false);
+  const [quoteError, setQuoteError] = useState(false);
 
   // Field validation functions
   const rules = {
@@ -150,6 +156,99 @@ export default function LeadForm({ externalSelectedPkg = "" }: LeadFormProps) {
     return ok;
   };
 
+  // Dynamic Quote Estimator effect (debounced 400ms)
+  useEffect(() => {
+    if (!values.selectedPkg) {
+      setEstimate(null);
+      setBreakdown([]);
+      return;
+    }
+
+    setLoadingQuote(true);
+    const handler = setTimeout(async () => {
+      try {
+        const res = await fetch("/api/quote", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            selectedPkg: values.selectedPkg,
+            numAdults: values.numAdults,
+            numChildren: values.numChildren,
+            flightClass: values.flightClass,
+            hotelPref: values.hotelPref,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Quote fetch failed");
+        const data = await res.json();
+        setEstimate(data.estimate);
+        setBreakdown(data.breakdown);
+        setQuoteError(false);
+      } catch (err) {
+        console.error("Failed to load estimate:", err);
+        setQuoteError(true);
+      } finally {
+        setLoadingQuote(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(handler);
+  }, [
+    values.selectedPkg,
+    values.numAdults,
+    values.numChildren,
+    values.flightClass,
+    values.hotelPref,
+  ]);
+
+  const renderQuoteEstimator = () => {
+    if (!values.selectedPkg) return null;
+
+    const formatPrice = (amount: number) => {
+      return new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "EUR",
+        maximumFractionDigits: 0,
+      }).format(amount / 100);
+    };
+
+    return (
+      <div className={`quote-estimator ${loadingQuote ? "loading" : ""}`}>
+        <h4 className="quote-title">Estimated Total (Indicative)</h4>
+
+        {quoteError ? (
+          <div style={{ color: "var(--red-soft)", fontSize: "13px" }}>
+            Error loading live estimate. We will confirm final pricing manually.
+          </div>
+        ) : (
+          <>
+            <div className="quote-breakdown">
+              {breakdown.map((item, idx) => (
+                <div className="quote-line" key={idx}>
+                  <span className="quote-line-label">{item.label}</span>
+                  <span className="quote-line-amount">{formatPrice(item.amount)}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="quote-divider" />
+
+            <div className="quote-total-row">
+              <span className="quote-total-label">Estimated Total</span>
+              <span className="quote-total-value">
+                {estimate !== null ? formatPrice(estimate) : "Calculating..."}
+              </span>
+            </div>
+
+            <p className="quote-disclaimer">
+              * This is an initial estimate. Your concierge will confirm final bespoke pricing.
+            </p>
+          </>
+        )}
+      </div>
+    );
+  };
+
   const handleNext = () => {
     if (!validateStep(step)) return;
     setStep((prev) => Math.min(4, prev + 1));
@@ -196,9 +295,8 @@ export default function LeadForm({ externalSelectedPkg = "" }: LeadFormProps) {
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     try {
-      const res = await fetch(SCRIPT_URL, {
+      const res = await fetch("/api/leads", {
         method: "POST",
-        mode: "cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
         signal: controller.signal,
@@ -473,6 +571,7 @@ export default function LeadForm({ externalSelectedPkg = "" }: LeadFormProps) {
                     />
                   </div>
                 </div>
+                {renderQuoteEstimator()}
               </div>
             )}
 
@@ -557,6 +656,7 @@ export default function LeadForm({ externalSelectedPkg = "" }: LeadFormProps) {
                     </select>
                   </div>
                 </div>
+                {renderQuoteEstimator()}
               </div>
             )}
 
@@ -577,6 +677,11 @@ export default function LeadForm({ externalSelectedPkg = "" }: LeadFormProps) {
                   {values.numChildren && <> &nbsp;·&nbsp; <b>Children (9–14):</b> {values.numChildren}</>}<br />
                   <b>Departure:</b> {values.depDate}
                   {values.depCity && <> &nbsp;·&nbsp; {values.depCity}</>}<br />
+                  {estimate !== null && (
+                    <>
+                      <b>Estimated Total:</b> {new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(estimate / 100)} (Indicative)<br />
+                    </>
+                  )}
                   {values.specialReq && <><b>Special Requests:</b> {values.specialReq}</>}
                 </div>
                 <div className="consent">
