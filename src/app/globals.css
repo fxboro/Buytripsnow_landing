@@ -1128,6 +1128,421 @@ button{cursor:pointer;font-family:var(--ff-b);}
   margin: 0;
 }
 
+/* ── Concierge CRM Dashboard & Login Styles ── */
+
+.crm-body {
+  background-color: #0b0c10;
+  color: #e3e4e6;
+  font-family: var(--font-jost), sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+}
+
+/* Auth Login Screen */
+.crm-auth-wrap {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #161920 0%, #090a0d 100%);
+  padding: 20px;
+}
+
+.crm-auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #111318;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: var(--r);
+  padding: 40px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.crm-auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.crm-auth-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 32px;
+  color: var(--white);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.crm-auth-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+}
+
+/* Sidebar Navigation */
+.crm-sidebar {
+  width: 260px;
+  background-color: #0e1015;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+}
+
+.crm-sidebar-logo {
+  padding: 32px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.crm-sidebar-logo-text {
+  font-family: var(--font-cormorant), serif;
+  font-size: 22px;
+  color: var(--white);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.crm-sidebar-logo-sub {
+  font-size: 9px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.crm-sidebar-nav {
+  flex: 1;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.crm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.crm-nav-item:hover, .crm-nav-item.active {
+  color: var(--white);
+  background-color: rgba(197, 168, 128, 0.08);
+}
+
+.crm-nav-item.active {
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+}
+
+.crm-sidebar-footer {
+  padding: 20px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.crm-logout-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  border-radius: var(--r);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.crm-logout-btn:hover {
+  background: rgba(255, 82, 82, 0.08);
+  border-color: rgba(255, 82, 82, 0.3);
+  color: #ff5252;
+}
+
+/* CRM Main Content Area */
+.crm-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.crm-header {
+  padding: 24px 40px;
+  background-color: #0e1015;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crm-header-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 28px;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.crm-content {
+  padding: 40px;
+  overflow-y: auto;
+  flex: 1;
+  background-color: #0b0c10;
+}
+
+/* KPI Summary Cards */
+.crm-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.crm-stat-card {
+  background: #111318;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--r);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+
+.crm-stat-val {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.crm-stat-accent {
+  color: var(--gold);
+}
+
+/* CRM Table & Filter Wrap */
+.crm-panel-card {
+  background: #111318;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.crm-filters-row {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.crm-search-input {
+  flex: 1;
+  min-width: 240px;
+  background: #161920;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r);
+  color: var(--white);
+  padding: 10px 16px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.crm-search-input:focus {
+  border-color: var(--gold);
+}
+
+.crm-filter-select {
+  background: #161920;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r);
+  color: var(--white);
+  padding: 10px 16px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* CRM Table */
+.crm-table-container {
+  overflow-x: auto;
+}
+
+.crm-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.crm-table th {
+  background-color: #14171d;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  padding: 16px 24px;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.crm-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.crm-table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.01);
+  cursor: pointer;
+}
+
+.crm-table tr.selected td {
+  background-color: rgba(197, 168, 128, 0.05);
+}
+
+/* Pipeline Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.new { background: rgba(0, 184, 212, 0.15); color: #00e5ff; }
+.badge.contacted { background: rgba(255, 145, 0, 0.15); color: #ffab40; }
+.badge.itinerary_sent { background: rgba(213, 0, 249, 0.15); color: #f50057; }
+.badge.negotiating { background: rgba(255, 214, 0, 0.15); color: #ffd600; }
+.badge.booked { background: rgba(0, 230, 118, 0.15); color: #00e676; }
+.badge.completed { background: rgba(120, 144, 156, 0.15); color: #b0bec5; }
+.badge.cancelled { background: rgba(255, 23, 68, 0.15); color: #ff1744; }
+
+/* CRM Split Details Layout */
+.crm-dashboard-split {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.crm-leads-list-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.crm-lead-details-sidebar {
+  width: 440px;
+  background: #111318;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--r);
+  padding: 32px;
+  box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 40px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* Detail UI Elements */
+.crm-details-hdr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.crm-details-name {
+  font-family: var(--font-cormorant), serif;
+  font-size: 26px;
+  color: var(--white);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.crm-details-sec-title {
+  font-family: var(--font-jost), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin: 24px 0 12px 0;
+}
+
+.crm-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  background: #161920;
+  padding: 16px;
+  border-radius: var(--r);
+}
+
+.crm-details-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.crm-details-val {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.crm-details-val-full {
+  grid-column: span 2;
+}
+
+/* CRM Quote and Log Panels */
+.crm-logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.crm-log-item {
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 2px solid var(--gold);
+  padding: 10px 14px;
+  border-radius: 0 4px 4px 0;
+}
+
+.crm-log-time {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 4px;
+}
+
+.crm-log-notes {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+
 
 
 

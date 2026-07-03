@@ -118,7 +118,7 @@ export async function POST(request: Request) {
     // Get active concierges
     const { data: concierges, error: cErr } = await supabase
       .from("concierges")
-      .select("id, name, email")
+      .select("id, name, email, specializations")
       .eq("is_active", true);
 
     if (cErr) {
@@ -136,9 +136,22 @@ export async function POST(request: Request) {
         console.error("Error fetching active leads for routing:", lErr);
       }
 
+      // Map packages to specialization tags
+      const targetTag = pkgEnum === "nature_discovery" ? "nature" : "germany-family";
+      
+      // Filter candidates by specialization tag
+      let candidateConcierges = concierges.filter((c) =>
+        c.specializations?.includes(targetTag)
+      );
+
+      // Fallback if no matching concierge has the tag
+      if (candidateConcierges.length === 0) {
+        candidateConcierges = concierges;
+      }
+
       // Compute frequency map
       const counts: Record<string, number> = {};
-      concierges.forEach((c) => {
+      candidateConcierges.forEach((c) => {
         counts[c.id] = 0;
       });
 
@@ -151,10 +164,10 @@ export async function POST(request: Request) {
       }
 
       // Route to concierge with fewest active leads
-      let bestConcierge = concierges[0];
+      let bestConcierge = candidateConcierges[0];
       let minCount = counts[bestConcierge.id];
 
-      for (const c of concierges) {
+      for (const c of candidateConcierges) {
         if (counts[c.id] < minCount) {
           minCount = counts[c.id];
           bestConcierge = c;
