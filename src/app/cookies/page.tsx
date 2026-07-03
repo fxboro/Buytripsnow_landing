@@ -1,0 +1,97 @@
+import Link from "next/link";
+
+export const metadata = {
+  title: "Cookie Policy — BuyTripsNow",
+};
+
+export default function CookiePolicy() {
+  return (
+    <div className="policy-page">
+      <nav className="nav">
+        <div className="wrap" style={{ padding: 0 }}>
+          <Link href="/">← Back to Home</Link>
+        </div>
+      </nav>
+
+      <main className="wrap">
+        <h1>Cookie Policy</h1>
+        <p>Last Updated: April 25, 2026</p>
+
+        <p>This Cookie Policy explains how BuyTripsNow OÜ uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are and why we use them, as well as your rights to control our use of them.</p>
+
+        <h2>What are cookies?</h2>
+        <p>Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.</p>
+
+        <h2>Why do we use cookies?</h2>
+        <p>We use first-party and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our website to operate, and we refer to these as &quot;essential&quot; or &quot;strictly necessary&quot; cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our online properties.</p>
+
+        <h2>Types of Cookies We Use</h2>
+        
+        <h3>Essential Cookies</h3>
+        <p>These cookies are strictly necessary to provide you with services available through our website and to use some of its features.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>buytripsnow_consent</td>
+              <td>Stores your cookie consent preferences.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Analytics &amp; Performance Cookies</h3>
+        <p>These cookies collect information that is used either in aggregate form to help us understand how our website is being used or how effective our marketing campaigns are.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Provider</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_ga, _gid</td>
+              <td>Google Analytics</td>
+              <td>Used to distinguish users and session data.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Marketing Cookies</h3>
+        <p>These cookies are used to make advertising messages more relevant to you.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Provider</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_fbp</td>
+              <td>Meta (Facebook)</td>
+              <td>Used to deliver advertisement products such as real-time bidding from third-party advertisers.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>How can I control cookies?</h2>
+        <p>You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in our Cookie Banner. You can also set or amend your web browser controls to accept or refuse cookies.</p>
+
+        <h2>Contact Us</h2>
+        <p>If you have any questions about our use of cookies or other technologies, please email us at <a href="mailto:chima@buytripsnow.com" style={{ color: "var(--gold)" }}>chima@buytripsnow.com</a>.</p>
+      </main>
+
+      <footer className="footer">
+        © 2026 BuyTripsNow OÜ. All rights reserved.
+      </footer>
+    </div>
+  );
+}

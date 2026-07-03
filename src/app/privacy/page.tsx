@@ -1,0 +1,72 @@
+import Link from "next/link";
+
+export const metadata = {
+  title: "Privacy Policy — BuyTripsNow",
+};
+
+export default function PrivacyPolicy() {
+  return (
+    <div className="policy-page">
+      <nav className="nav">
+        <div className="wrap" style={{ padding: 0 }}>
+          <Link href="/">← Back to Home</Link>
+        </div>
+      </nav>
+
+      <main className="wrap">
+        <h1>Privacy Policy</h1>
+        <p>Last Updated: April 25, 2026</p>
+
+        <p>At BuyTripsNow OÜ (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), we are committed to protecting your privacy and ensuring your personal data is handled with the highest level of care and security. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you visit our website or use our concierge services.</p>
+
+        <h2>1. Data We Collect</h2>
+        <p>We collect personal data that you voluntarily provide to us when you enquire about our travel packages, including:</p>
+        <ul>
+          <li><strong>Identification Data:</strong> Name, email address, phone number, and country of residence.</li>
+          <li><strong>Travel Preferences:</strong> Departure city, preferred dates, group size, budget, hotel preferences, and special requests.</li>
+          <li><strong>Usage Data:</strong> Information about how you interact with our website, collected via cookies and tracking technologies (subject to your consent).</li>
+        </ul>
+
+        <h2>2. How We Use Your Data</h2>
+        <p>We process your personal data for the following purposes:</p>
+        <ul>
+          <li>To respond to your enquiries and provide bespoke travel itineraries.</li>
+          <li>To manage your bookings and provide 24/7 concierge support during your trip.</li>
+          <li>To communicate important updates regarding your journey.</li>
+          <li>To improve our website performance and marketing effectiveness (with your consent).</li>
+          <li>To comply with legal and regulatory obligations.</li>
+        </ul>
+
+        <h2>3. Legal Basis for Processing</h2>
+        <p>Under the GDPR, we process your data based on:</p>
+        <ul>
+          <li><strong>Performance of a Contract:</strong> Necessary to provide the services you request.</li>
+          <li><strong>Legitimate Interests:</strong> To improve our services and respond to enquiries.</li>
+          <li><strong>Consent:</strong> For marketing communications and non-essential cookies.</li>
+          <li><strong>Legal Obligation:</strong> To comply with Estonian and EU laws.</li>
+        </ul>
+
+        <h2>4. Data Sharing and Transfers</h2>
+        <p>We do not sell your personal data. We may share your information with trusted third-party partners (such as hotels, airlines, and local transfer providers) solely to fulfill your travel arrangements. As we operate globally, your data may be transferred outside the EEA; in such cases, we ensure appropriate safeguards are in place.</p>
+
+        <h2>5. Your Rights</h2>
+        <p>You have the right to access, rectify, or erase your personal data. You may also object to processing, request data portability, or withdraw your consent at any time. To exercise these rights, please contact our Data Protection Officer at <a href="mailto:chima@buytripsnow.com" style={{ color: "var(--gold)" }}>chima@buytripsnow.com</a>.</p>
+
+        <h2>6. Data Retention</h2>
+        <p>We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected, or as required by law (typically 7 years for financial and contractual records in Estonia).</p>
+
+        <h2>7. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+        <p>
+          BuyTripsNow OÜ<br />
+          Tallinn, Estonia<br />
+          Email: <a href="mailto:chima@buytripsnow.com" style={{ color: "var(--gold)" }}>chima@buytripsnow.com</a>
+        </p>
+      </main>
+
+      <footer className="footer">
+        © 2026 BuyTripsNow OÜ. All rights reserved.
+      </footer>
+    </div>
+  );
+}

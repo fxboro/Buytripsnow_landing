@@ -133,6 +133,11 @@ async function submitForm(){
   const prev=nb.innerHTML;
   nb.disabled=true;
   nb.innerHTML='<span class="spin"></span> Submitting…';
+  
+  // Hide any previous submission errors
+  const errEl = document.getElementById('submitErr');
+  if (errEl) errEl.classList.remove('show');
+
   const pkg=document.querySelector('[name="pkg"]:checked');
   const d=id=>document.getElementById(id).value;
   const payload={
@@ -150,14 +155,38 @@ async function submitForm(){
     marketing:     document.getElementById('consent2').checked?'Yes':'No',
     source:        'Germany 2026 Landing Page'
   };
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
   try{
-    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    showSuccess(payload);
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    
+    const result = await res.json();
+    if (result.status === 'success') {
+      showSuccess(payload);
+    } else {
+      throw new Error(result.message || 'Server returned failure status');
+    }
   }catch(e){
-    document.getElementById('submitErr').classList.add('show');
-    nb.disabled=false;nb.innerHTML=prev;
+    clearTimeout(timeout);
+    console.error('Lead submission failure:', e);
+    const errText = document.getElementById('submitErr');
+    if (errText) {
+      errText.classList.add('show');
+    }
+    nb.disabled=false;
+    nb.innerHTML=prev;
   }
 }
+
 
 function showSuccess(p){
   document.querySelectorAll('.panel').forEach(el=>el.style.display='none');
@@ -195,4 +224,49 @@ function declineCookies(){
   if(cookieBanner) cookieBanner.classList.remove('show');
 }
 
-window.addEventListener('load', checkConsent);
+window.addEventListener('load', () => {
+  checkConsent();
+
+  // Real-time validation for Step 1 fields
+  const step1Fields = [
+    {id:'ff-fn', el:'firstName', fn:v=>v.trim().length>0},
+    {id:'ff-ln', el:'lastName',  fn:v=>v.trim().length>0},
+    {id:'ff-em', el:'email',     fn:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
+    {id:'ff-ph', el:'phone',     fn:v=>v.trim().length>5}
+  ];
+
+  step1Fields.forEach(({id, el, fn}) => {
+    const input = document.getElementById(el);
+    if(input) {
+      input.addEventListener('blur', () => {
+        const wrap = document.getElementById(id);
+        if(!fn(input.value)) wrap.classList.add('err');
+        else wrap.classList.remove('err');
+      });
+      input.addEventListener('input', () => {
+        const wrap = document.getElementById(id);
+        if(fn(input.value)) wrap.classList.remove('err');
+      });
+    }
+  });
+
+  // Additional form validation: enforce campaign date boundaries in JS
+  const depDateInput = document.getElementById('depDate');
+  if(depDateInput) {
+    depDateInput.addEventListener('change', () => {
+      const wrap = document.getElementById('ff-dt');
+      const val = depDateInput.value;
+      if (val) {
+        const d = new Date(val);
+        const minD = new Date('2026-08-01');
+        const maxD = new Date('2026-09-30');
+        if (d < minD || d > maxD) {
+          wrap.classList.add('err');
+        } else {
+          wrap.classList.remove('err');
+        }
+      }
+    });
+  }
+});
+
