@@ -76,15 +76,50 @@ export interface Lead {
   status: LeadStatus;
   assigned_concierge_id: string | null; // FK → concierges.id
   source: string; // e.g. "Germany 2026 Landing Page"
+  stripe_customer_id: string | null;
+  stripe_session_id: string | null;
+  amount_paid_cents: number;
   created_at: string; // ISO timestamp
   updated_at: string; // ISO timestamp
 }
 
 /** Payload for inserting a new lead (omit server-generated fields) */
-export type LeadInsert = Omit<Lead, "id" | "status" | "assigned_concierge_id" | "created_at" | "updated_at">;
+export type LeadInsert = Omit<
+  Lead,
+  | "id"
+  | "status"
+  | "assigned_concierge_id"
+  | "created_at"
+  | "updated_at"
+  | "stripe_customer_id"
+  | "stripe_session_id"
+  | "amount_paid_cents"
+>;
 
 /** Payload for updating an existing lead */
-export type LeadUpdate = Partial<Omit<Lead, "id" | "created_at">>;
+export type LeadUpdate = Partial<Omit<Lead, "id" | "created_at" | "stripe_customer_id" | "stripe_session_id" | "amount_paid_cents">>;
+
+/* ═══════════════════════════════════════════════
+   TABLE: itinerary_days
+═══════════════════════════════════════════════ */
+
+/** A row in the `itinerary_days` table */
+export interface ItineraryDay {
+  id: string; // uuid, PK
+  lead_id: string; // FK → leads.id
+  day_number: number;
+  title: string;
+  hotel: string | null;
+  morning_activity: string | null;
+  afternoon_activity: string | null;
+  evening_activity: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type ItineraryDayInsert = Omit<ItineraryDay, "id" | "created_at" | "updated_at">;
+export type ItineraryDayUpdate = Partial<Omit<ItineraryDay, "id" | "created_at" | "updated_at">>;
 
 /* ═══════════════════════════════════════════════
    TABLE: concierges

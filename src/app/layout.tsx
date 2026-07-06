@@ -18,6 +18,7 @@ const jost = Jost({
 export const metadata: Metadata = {
   title: "BuyTripsNow — Bespoke Luxury Family Travel | Germany Late Summer 2026",
   description: "Exclusive 10-day luxury family journeys through Germany. Handpicked 4-star hotels, private transfers, and a dedicated 24/7 concierge for a seamless travel experience.",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
